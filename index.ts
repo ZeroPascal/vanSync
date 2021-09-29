@@ -21,7 +21,7 @@ app.get('/', function (req, res) {
 
 const server = require('http').createServer(app);
 let clients = 0
-const io = new Server(server)
+export const io = new Server(server)
 
     let folders = new Folders(io, getLocal())
 
@@ -41,7 +41,7 @@ const io = new Server(server)
         socket.on(socketCommand.REQUEST_FOLDER, (payload: { folderKey: folderKey }) => {
             folders.emitFolder(payload.folderKey)
         })
-        socket.on(socketCommand.SYNC_ITEMS, (payload: { src: folderKey, fileNames: fileName[], dst: folderKey }) => {
+        socket.on(socketCommand.SYNC_ITEMS, (payload: { src: folderKey, fileNames: fileName[], dst: folderKey, removeLink: boolean }) => {
             folders.syncItems(payload)
         })
 
