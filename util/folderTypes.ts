@@ -1,4 +1,5 @@
 import path from 'path'
+import Folder from './Folder';
 
 export type folderKey= string
 
@@ -50,11 +51,11 @@ export type folder={
     key: folderKey,
     name: string,
     location: filePath,
-    content: content[],
+    content: Record<fileName, content>,
     selected: selectedStatus
 }
 
-export type folders= folderKey[]
+export type folders= Record<folderKey,Folder>
 
 
 export default folders

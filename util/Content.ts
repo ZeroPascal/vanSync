@@ -1,4 +1,4 @@
-import { content,fileName,fileType,syncStats,syncProgress,fileLink, filePath, fileTypes } from "./folderTypes";
+import { content,fileName,fileType,syncStats,syncProgress,fileLink, filePath, fileTypes, folderKey } from "./folderTypes";
 import path from 'path'
 type stats={
     dev: number,
@@ -30,8 +30,9 @@ export default class Content implements content{
     dateModified: number
     syncStatus: syncStats
     syncProgress: number
-    linkedTo: undefined
-    constructor(fileString: string, stats: stats){
+    linkedTo: fileLink | undefined
+  
+    constructor(fileString: string ='', stats: stats | undefined){
        this.fileName = path.basename(fileString)
        this.filePath = path.dirname(fileString)
        let type = fileType.UNKNOWN
@@ -39,13 +40,37 @@ export default class Content implements content{
            case '.png':
                type= fileType.MEDIA;
                break;
+            case '':
+                type = fileType.FOLDER;
        }
+       
        this.fileType = type
+       if(stats){
        this.size = stats.size
        this.dateMade = stats.birthtimeMs
+      
+       }else{
+           this.size = 0
+           this.dateMade = 0
+     
+
+       }
        this.syncStatus = syncStats.NOT_SYNCED
        this.linkedTo = undefined
 
+
       // console.log('Conent Made',this.fileName)
+    }
+    get FilePath(){
+        return this.filePath+'/'+this.fileName
+    }
+
+    LinkTo(src: folderKey, child: folderKey){
+        if(!this.linkedTo){
+            this.linkedTo = { parent: src, file: this.fileName, children: [child]}
+        }else{
+            this.linkedTo.children.push(child)
+        }
+
     }
 }

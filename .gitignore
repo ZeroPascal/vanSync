@@ -4,7 +4,7 @@
 .pnp.js
 /certs
 /log
-ServerConfig.json
+/local
 
 # testing
 /coverage

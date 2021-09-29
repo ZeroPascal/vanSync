@@ -7,6 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.ts"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "local/*.json"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ZeroPascal/vanSync.git"
